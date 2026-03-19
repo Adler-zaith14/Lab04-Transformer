@@ -21,12 +21,9 @@ enc.eval()
 dec.eval()
 
 embeddings = torch.rand(VOCAB, D)
-
-# entrada: "Redes neurais"
 entrada_tokens = torch.tensor([[3, 4]])
 entrada = embeddings[entrada_tokens]
 
-# positional encoding
 pe = pos_encoding(entrada.size(1), D)
 entrada = entrada + pe.unsqueeze(0)
 
