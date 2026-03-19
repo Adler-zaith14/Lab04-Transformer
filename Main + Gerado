@@ -1,0 +1,17 @@
+gerados = [START]
+dec_input = embeddings[START].unsqueeze(0).unsqueeze(0)
+
+with torch.no_grad():
+    while len(gerados) < 10:
+        probs = dec(dec_input, z)
+        proximo = torch.argmax(probs[0, -1, :]).item()
+
+        print(f'token {proximo} -> {vocab_map[proximo]}')
+
+        if proximo == EOS:
+            break
+        gerados.append(proximo)
+        novo = embeddings[proximo].unsqueeze(0).unsqueeze(0)
+        dec_input = torch.cat([dec_input, novo], dim=1)
+
+print('Saída:', ' '.join([vocab_map[t] for t in gerados]))
