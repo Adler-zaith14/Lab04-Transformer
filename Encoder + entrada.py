@@ -7,9 +7,9 @@ EOS = 2
 
 vocab_map = {
     0: '<PAD>', 1: '<START>', 2: '<EOS>',
-    3: 'Thinking', 4: 'Machines',
-    5: 'são', 6: 'incríveis',
-    7: '.', 8: 'wow', 9: '!'
+    3: 'Redes', 4: 'neurais',
+    5: 'são', 6: 'fortes',
+    7: '.', 8: 'muito', 9: '!'
 }
 
 torch.manual_seed(7)
@@ -22,13 +22,18 @@ dec.eval()
 
 embeddings = torch.rand(VOCAB, D)
 
-
+# entrada: "Redes neurais"
 entrada_tokens = torch.tensor([[3, 4]])
 entrada = embeddings[entrada_tokens]
 
-
+# positional encoding
 pe = pos_encoding(entrada.size(1), D)
 entrada = entrada + pe.unsqueeze(0)
+
+with torch.no_grad():
+    z = enc(entrada)
+
+print('Z shape:', z.shape)
 
 with torch.no_grad():
     z = enc(entrada)
